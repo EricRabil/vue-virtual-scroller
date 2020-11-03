@@ -4,6 +4,7 @@
     :items="itemsWithSize"
     :min-item-size="minItemSize"
     :direction="direction"
+    :debounce="debounce"
     :buffer="buffer"
     key-field="id"
     v-bind="$attrs"
