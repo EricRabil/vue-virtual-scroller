@@ -1012,6 +1012,8 @@
 
 
           if (!view) {
+            if (_i3 === items.length - 1) this.$emit('scrolledtoend');
+            if (_i3 === 0) this.$emit('scrolledtobegin');
             type = item[typeField];
             unusedPool = unusedViews.get(type);
 
