@@ -29,8 +29,7 @@
         :style="ready ? { transform: `translate${direction === 'vertical' ? 'Y' : 'X'}(${view.position}px)` } : null"
         class="vue-recycle-scroller__item-view"
         :class="{ hover: hoverKey === view.nr.key }"
-        @mouseenter="hoverKey = view.nr.key"
-        @mouseleave="hoverKey = null"
+        v-on="detectHover ? { mouseenter: () => hoverKey = view.nr.key, mouseleave: () => hoverKey = null } : {}"
       >
         <slot
           :item="view.item"
@@ -116,6 +115,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    detectHover: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   data () {
@@ -136,13 +140,19 @@ export default {
         const items = this.items
         const field = this.sizeField
         const minItemSize = this.minItemSize
+        let computedMinSize = 10000
         let accumulator = 0
         let current
         for (let i = 0, l = items.length; i < l; i++) {
           current = items[i][field] || minItemSize
+          if (current < computedMinSize) {
+            computedMinSize = current
+          }
           accumulator += current
           sizes[i] = { accumulator, size: current }
         }
+        // eslint-disable-next-line
+        this.$_computedMinItemSize = computedMinSize
         return sizes
       }
       return []
@@ -175,8 +185,12 @@ export default {
     this.$_views = new Map()
     this.$_unusedViews = new Map()
     this.$_scrollDirty = false
+    this.$_lastUpdateScrollPosition = 0
 
-    if (this.$isServer) {
+    // In SSR mode, we also prerender the same number of item for the first render
+    // to avoir mismatch between server and client templates
+    if (this.prerender) {
+      this.$_prerender = true
       this.updateVisibleItems(false)
     }
   },
@@ -184,6 +198,8 @@ export default {
   mounted () {
     this.applyPageMode()
     this.$nextTick(() => {
+      // In SSR mode, render the real number of visible items
+      this.$_prerender = false
       this.updateVisibleItems(true)
       this.ready = true
     })
@@ -276,27 +292,41 @@ export default {
       }
     },
 
-    updateVisibleItems (checkItem) {
+    updateVisibleItems (checkItem, checkPositionDiff = false) {
       const itemSize = this.itemSize
+      const minItemSize = this.$_computedMinItemSize
       const typeField = this.typeField
       const keyField = this.simpleArray ? null : this.keyField
       const items = this.items
       const count = items.length
       const sizes = this.sizes
       const views = this.$_views
-      let unusedViews = this.$_unusedViews
+      const unusedViews = this.$_unusedViews
       const pool = this.pool
       let startIndex, endIndex
       let totalSize
 
       if (!count) {
         startIndex = endIndex = totalSize = 0
-      } else if (this.$isServer) {
+      } else if (this.$_prerender) {
         startIndex = 0
         endIndex = this.prerender
         totalSize = null
       } else {
         const scroll = this.getScroll()
+
+        // Skip update if use hasn't scrolled enough
+        if (checkPositionDiff) {
+          let positionDiff = scroll.start - this.$_lastUpdateScrollPosition
+          if (positionDiff < 0) positionDiff = -positionDiff
+          if ((itemSize === null && positionDiff < minItemSize) || positionDiff < itemSize) {
+            return {
+              continuous: true,
+            }
+          }
+        }
+        this.$_lastUpdateScrollPosition = scroll.start
+
         const buffer = this.buffer
         scroll.start -= buffer
         scroll.end += buffer
@@ -357,7 +387,6 @@ export default {
       let view
 
       const continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex
-      let unusedIndex
 
       if (this.$_continuous !== continuous) {
         if (continuous) {
@@ -376,7 +405,7 @@ export default {
             // Update view item index
             if (checkItem) {
               view.nr.index = items.findIndex(
-                item => keyField ? item[keyField] === view.item[keyField] : item === view.item
+                item => keyField ? item[keyField] === view.item[keyField] : item === view.item,
               )
             }
 
@@ -392,9 +421,7 @@ export default {
         }
       }
 
-      if (!continuous) {
-        unusedIndex = new Map()
-      }
+      const unusedIndex = continuous ? null : new Map()
 
       let item, type, unusedPool
       let v
@@ -413,10 +440,13 @@ export default {
 
         // No view assigned to item
         if (!view) {
+          if (i === items.length - 1) this.$emit('scrolledtoend')
+          if (i === 0) this.$emit('scrolledtobegin')
+
           type = item[typeField]
+          unusedPool = unusedViews.get(type)
 
           if (continuous) {
-            unusedPool = unusedViews.get(type)
             // Reuse existing view
             if (unusedPool && unusedPool.length) {
               view = unusedPool.pop()
@@ -429,23 +459,24 @@ export default {
               view = this.addView(pool, i, item, key, type)
             }
           } else {
-            unusedPool = unusedViews.get(type)
-            v = unusedIndex.get(type) || 0
             // Use existing view
             // We don't care if they are already used
             // because we are not in continous scrolling
-            if (unusedPool && v < unusedPool.length) {
-              view = unusedPool[v]
-              view.item = item
-              view.nr.used = true
-              view.nr.index = i
-              view.nr.key = key
-              view.nr.type = type
-              unusedIndex.set(type, v + 1)
-            } else {
+            v = unusedIndex.get(type) || 0
+
+            if (!unusedPool || v >= unusedPool.length) {
               view = this.addView(pool, i, item, key, type)
               this.unuseView(view, true)
+              unusedPool = unusedViews.get(type)
             }
+
+            view = unusedPool[v]
+            view.item = item
+            view.nr.used = true
+            view.nr.index = i
+            view.nr.key = key
+            view.nr.type = type
+            unusedIndex.set(type, v + 1)
             v++
           }
           views.set(key, view)
@@ -466,6 +497,11 @@ export default {
       this.$_endIndex = endIndex
 
       if (this.emitUpdate) this.$emit('update', startIndex, endIndex)
+
+      // After the user has finished scrolling
+      // Sort views so text selection is correct
+      clearTimeout(this.$_sortTimer)
+      this.$_sortTimer = setTimeout(this.sortViews, 300)
 
       return {
         continuous,
@@ -564,10 +600,14 @@ export default {
 
     itemsLimitError () {
       setTimeout(() => {
-        console.log(`It seems the scroller element isn't scrolling, so it tries to render all the items at once.`, 'Scroller:', this.$el)
-        console.log(`Make sure the scroller has a fixed height (or width) and 'overflow-y' (or 'overflow-x') set to 'auto' so it can scroll correctly and only render the items visible in the scroll viewport.`)
+        console.log('It seems the scroller element isn\'t scrolling, so it tries to render all the items at once.', 'Scroller:', this.$el)
+        console.log('Make sure the scroller has a fixed height (or width) and \'overflow-y\' (or \'overflow-x\') set to \'auto\' so it can scroll correctly and only render the items visible in the scroll viewport.')
       })
       throw new Error('Rendered items limit reached')
+    },
+
+    sortViews () {
+      this.pool.sort((viewA, viewB) => viewA.nr.index - viewB.nr.index)
     },
   },
 }
