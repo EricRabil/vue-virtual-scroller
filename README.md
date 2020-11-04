@@ -1,4 +1,6 @@
-# vue-virtual-scroller
+# vue-virtual-scroller (Eric's Edition)
+
+> Hi! This is a custom build of `vue-virtual-scroller` with pull requests that the original maintainer has not merged for a few months, along with issues that haven't been fixed in the master branch. I maintain the library as I see fit within this branch.
 
 [![npm](https://img.shields.io/npm/v/vue-virtual-scroller.svg) ![npm](https://img.shields.io/npm/dm/vue-virtual-scroller.svg)](https://www.npmjs.com/package/vue-virtual-scroller)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
