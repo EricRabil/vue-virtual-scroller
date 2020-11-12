@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import vue from 'rollup-plugin-vue'
 import cjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
+import typescript from '@rollup/plugin-typescript';
 import { eslint } from 'rollup-plugin-eslint'
 import css from 'rollup-plugin-css-only'
 import autoprefixer from 'autoprefixer'
@@ -18,8 +19,9 @@ export default {
       mainFields: ['module', 'jsnext', 'main', 'browser'],
     }),
     eslint({
-      include: ['src/**/*.{js,vue}'],
+      include: ['src/**/*.{js,ts,vue}'],
     }),
+    typescript(),
     vue({
       css: false,
       style: {

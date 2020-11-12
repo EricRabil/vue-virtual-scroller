@@ -1,44 +1,31 @@
 {
   "name": "vue-virtual-scroller",
-  "description": "Smooth scrolling for any amount of data",
   "version": "1.0.10",
+  "description": "Smooth scrolling for any amount of data",
   "author": {
     "name": "Guillaume Chau",
     "email": "guillaume.b.chau@gmail.com"
   },
-  "keywords": [
-    "vue",
-    "vuejs",
-    "plugin"
-  ],
-  "license": "MIT",
-  "main": "dist/vue-virtual-scroller.umd.js",
-  "module": "dist/vue-virtual-scroller.esm.js",
-  "unpkg": "dist/vue-virtual-scroller.min.js",
   "scripts": {
-    "build": "npm run build:browser && npm run build:es && npm run build:umd",
+    "build": "vue-cli-service build --target lib --mode production src/main.ts",
+    "lint": "vue-cli-service lint",
     "build:browser": "rollup --config build/rollup.config.browser.js",
     "build:es": "rollup --config build/rollup.config.es.js",
     "build:umd": "rollup --config build/rollup.config.umd.js",
-    "prepublishOnly": "npm run lint && npm run build",
     "dev": "cross-env NODE_ENV=development rollup --config build/rollup.config.es.js --watch",
-    "lint": "eslint --ext .js,.vue src"
+    "prepublishOnly": "npm run lint && npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Akryum/vue-virtual-scroller.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Akryum/vue-virtual-scroller/issues"
-  },
-  "homepage": "https://github.com/Akryum/vue-virtual-scroller#readme",
+  "main": "dist/vue-virtual-scroller.umd.min.js",
+  "module": "dist/vue-virtual-scroller.common.js",
+  "unpkg": "dist/vue-virtual-scroller.umd.min.js",
   "dependencies": {
+    "@rollup/plugin-typescript": "^6.1.0",
+    "core-js": "^3.6.5",
     "scrollparent": "^2.0.1",
+    "vue-class-component": "^7.2.3",
     "vue-observe-visibility": "^0.4.4",
+    "vue-property-decorator": "^8.4.2",
     "vue-resize": "^0.4.5"
-  },
-  "peerDependencies": {
-    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -46,18 +33,29 @@
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-replace": "^2.3.1",
+    "@types/scrollparent": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "autoprefixer": "^9.7.5",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.1",
     "clean-css": "^4.1.8",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-html": "^6.0.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.12.0",
     "rollup": "^2.2.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-css-only": "^2.0.0",
@@ -65,14 +63,36 @@
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-vue": "^5.1.6",
-    "vue": "^2.5.17",
+    "sass-loader": "^8.0.2",
+    "typescript": "^4.0.5",
+    "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.11"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not ie <= 8",
+    "not dead"
   ],
+  "_id": "vue-virtual-scroller@1.0.10",
+  "bugs": {
+    "url": "https://github.com/Akryum/vue-virtual-scroller/issues"
+  },
+  "homepage": "https://github.com/Akryum/vue-virtual-scroller#readme",
+  "keywords": [
+    "vue",
+    "vuejs",
+    "plugin"
+  ],
+  "license": "MIT",
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/vue-virtual-scroller.git"
+  },
   "resolutions": {
     "vue": "2.5.22"
   }

@@ -1,44 +1,57 @@
-import Vue from 'vue'
+import Vue, { ComponentOptions } from 'vue'
 
-export default function ({
-  idProp = vm => vm.item.id,
+export default function <T extends { item: { id: unknown } }> ({
+  idProp = (vm: T) => vm.item.id
 } = {}) {
-  const store = {}
+  const store: Record<string, unknown> = {}
   const vm = new Vue({
     data () {
       return {
-        store,
+        store
       }
-    },
+    }
   })
 
+  interface IDStateInstance extends Vue {
+    $_id: unknown;
+    $_getId: () => unknown;
+    item: {
+      id: unknown;
+    };
+    $_updateIdState(): any;
+    $_idStateInit(id: unknown): any;
+    $options: ComponentOptions<Vue> & {
+      idState: Function;
+    };
+    idState: unknown;
+  }
+
   // @vue/component
-  return {
+  return Vue.extend({
     data () {
       return {
-        idState: null,
+        idState: null
       }
     },
 
-    created () {
+    created (this: IDStateInstance) {
       this.$_id = null
       if (typeof idProp === 'function') {
-        this.$_getId = () => idProp.call(this, this)
+        this.$_getId = () => idProp.call(this, this as any)
       } else {
         this.$_getId = () => this[idProp]
       }
-      this.$watch(this.$_getId, {
-        handler (value) {
-          this.$nextTick(() => {
-            this.$_id = value
-          })
-        },
-        immediate: true,
+      this.$watch(this.$_getId as any, (value) => {
+        this.$nextTick(() => {
+          this.$_id = value
+        })
+      }, {
+        immediate: true
       })
       this.$_updateIdState()
     },
 
-    beforeUpdate () {
+    beforeUpdate (this: IDStateInstance) {
       this.$_updateIdState()
     },
 
@@ -47,7 +60,7 @@ export default function ({
        * Initialize an idState
        * @param {number|string} id Unique id for the data
        */
-      $_idStateInit (id) {
+      $_idStateInit (this: IDStateInstance, id: string) {
         const factory = this.$options.idState
         if (typeof factory === 'function') {
           const data = factory.call(this, this)
@@ -62,18 +75,18 @@ export default function ({
       /**
        * Ensure idState is created and up-to-date
        */
-      $_updateIdState () {
+      $_updateIdState (this: IDStateInstance) {
         const id = this.$_getId()
         if (id == null) {
           console.warn(`No id found for IdState with idProp: '${idProp}'.`)
         }
         if (id !== this.$_id) {
-          if (!store[id]) {
+          if (!store[id as keyof typeof store]) {
             this.$_idStateInit(id)
           }
-          this.idState = store[id]
+          this.idState = store[id as keyof typeof store]
         }
-      },
-    },
-  }
+      }
+    }
+  })
 }

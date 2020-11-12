@@ -1,18 +1,19 @@
-import config from './config'
+import config, { VirtualScrollerOptions } from './config'
 
 import RecycleScroller from './components/RecycleScroller.vue'
 import DynamicScroller from './components/DynamicScroller.vue'
 import DynamicScrollerItem from './components/DynamicScrollerItem.vue'
+import { VueConstructor } from 'vue/types/umd'
 
 export { default as IdState } from './mixins/IdState'
 
 export {
   RecycleScroller,
   DynamicScroller,
-  DynamicScrollerItem,
+  DynamicScrollerItem
 }
 
-function registerComponents (Vue, prefix) {
+function registerComponents (Vue: VueConstructor, prefix: string) {
   Vue.component(`${prefix}recycle-scroller`, RecycleScroller)
   Vue.component(`${prefix}RecycleScroller`, RecycleScroller)
   Vue.component(`${prefix}dynamic-scroller`, DynamicScroller)
@@ -23,33 +24,29 @@ function registerComponents (Vue, prefix) {
 
 const plugin = {
   // eslint-disable-next-line no-undef
-  version: VERSION,
-  install (Vue, options) {
-    const finalOptions = Object.assign({}, {
+  version: '1.2.3',
+  install (Vue: VueConstructor, options: Partial<VirtualScrollerOptions> = {}) {
+    Object.assign(config, {
       installComponents: true,
-      componentsPrefix: '',
-    }, options)
+      componentsPrefix: ''
+    }, options) as unknown as VirtualScrollerOptions
 
-    for (const key in finalOptions) {
-      if (typeof finalOptions[key] !== 'undefined') {
-        config[key] = finalOptions[key]
-      }
+    if (config.installComponents) {
+      registerComponents(Vue, config.componentsPrefix)
     }
-
-    if (finalOptions.installComponents) {
-      registerComponents(Vue, finalOptions.componentsPrefix)
-    }
-  },
+  }
 }
 
 export default plugin
 
+declare const global: Record<string, unknown>
+
 // Auto-install
-let GlobalVue = null
+let GlobalVue: VueConstructor | null = null
 if (typeof window !== 'undefined') {
   GlobalVue = window.Vue
 } else if (typeof global !== 'undefined') {
-  GlobalVue = global.Vue
+  GlobalVue = global.Vue as VueConstructor
 }
 if (GlobalVue) {
   GlobalVue.use(plugin)
