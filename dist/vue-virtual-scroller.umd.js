@@ -206,6 +206,42 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 /***/ }),
 
+/***/ "06c5":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _unsupportedIterableToArray; });
+/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a630");
+/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("fb6a");
+/* harmony import */ var core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("b0c0");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("d3b7");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("25f0");
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("3ca3");
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("6b75");
+
+
+
+
+
+
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return Object(_babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Object(_babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(o, minLen);
+}
+
+/***/ }),
+
 /***/ "06cf":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1365,8 +1401,8 @@ defineIterator(String, 'String', function (iterated) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fbbd04-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DynamicScroller.vue?vue&type=template&id=2ff380ef&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('RecycleScroller',_vm._g(_vm._b({ref:"scroller",attrs:{"items":_vm.itemsWithSize,"min-item-size":_vm.minItemSize,"direction":_vm.direction,"debounce":_vm.debounce,"buffer":_vm.buffer,"key-field":"id"},on:{"resize":_vm.onScrollerResize,"visible":_vm.onScrollerVisible},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fbbd04-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DynamicScroller.vue?vue&type=template&id=26329a6a&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('RecycleScroller',_vm._g(_vm._b({ref:"scroller",attrs:{"items":_vm.itemsWithSize,"min-item-size":_vm.minItemSize,"direction":_vm.direction,"debounce":_vm.debounce,"buffer":_vm.buffer,"invisibleRenderIndices":_vm.indicesNeedingSizeComputationChunked,"key-field":"id"},on:{"resize":_vm.onScrollerResize,"visible":_vm.onScrollerVisible},scopedSlots:_vm._u([{key:"default",fn:function(ref){
 var itemWithSize = ref.item;
 var index = ref.index;
 var active = ref.active;
@@ -1379,10 +1415,19 @@ return [_vm._t("default",null,null,{
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/DynamicScroller.vue?vue&type=template&id=2ff380ef&
+// CONCATENATED MODULE: ./src/components/DynamicScroller.vue?vue&type=template&id=26329a6a&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__("4de4");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.index-of.js
 var es_array_index_of = __webpack_require__("c975");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__("d81d");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
+var es_array_slice = __webpack_require__("fb6a");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
 var es_symbol = __webpack_require__("a4d3");
@@ -1405,44 +1450,9 @@ var es_string_iterator = __webpack_require__("3ca3");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
 var web_dom_collections_iterator = __webpack_require__("ddb0");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
-var es_array_from = __webpack_require__("a630");
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+var unsupportedIterableToArray = __webpack_require__("06c5");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
-var es_array_slice = __webpack_require__("fb6a");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
-var es_regexp_to_string = __webpack_require__("25f0");
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-
-
-
-
-
-
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 
 
@@ -1456,7 +1466,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   var it;
 
   if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+    if (Array.isArray(o) || (it = Object(unsupportedIterableToArray["a" /* default */])(o)) || allowArrayLike && o && typeof o.length === "number") {
       if (it) o = it;
       var i = 0;
 
@@ -1508,6 +1518,12 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
     }
   };
 }
+// EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
+var runtime = __webpack_require__("96cf");
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
+var asyncToGenerator = __webpack_require__("1da1");
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
 var classCallCheck = __webpack_require__("d4ec");
 
@@ -1523,7 +1539,7 @@ var createSuper = __webpack_require__("2caf");
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__("9ab4");
 
-// EXTERNAL MODULE: ./src/components/RecycleScroller.vue + 5 modules
+// EXTERNAL MODULE: ./src/components/RecycleScroller.vue + 14 modules
 var RecycleScroller = __webpack_require__("95ca");
 
 // EXTERNAL MODULE: ./node_modules/vue-property-decorator/lib/vue-property-decorator.js + 1 modules
@@ -1533,6 +1549,11 @@ var vue_property_decorator = __webpack_require__("60a3");
 var common = __webpack_require__("2180");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--14-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DynamicScroller.vue?vue&type=script&lang=ts&
+
+
+
+
+
 
 
 
@@ -1562,12 +1583,108 @@ var DynamicScrollervue_type_script_lang_ts_DynamicScroller = /*#__PURE__*/functi
       keyField: _this.keyField,
       simpleArray: false
     };
+    _this.indicesNeedingSizeComputationChunked = [];
+    _this.didDoAComputation = false;
     return _this;
   }
   /** Computed */
 
 
   Object(createClass["a" /* default */])(DynamicScroller, [{
+    key: "mounted",
+    value: function mounted() {
+      this.scheduleNextSizeComputation();
+    }
+    /**
+     * Determines if there are remaining items to compute the size of, and does so. Reschedules another execution if there are more.
+     */
+
+  }, {
+    key: "scheduleNextSizeComputation",
+    value: function scheduleNextSizeComputation() {
+      var _this2 = this;
+
+      requestAnimationFrame( /*#__PURE__*/Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var scrollID, i;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                scrollID = null;
+
+                if (_this2.indicesNeedingSizeComputation.length > 0 && !_this2.$refs.scroller.scrolling) {
+                  scrollID = _this2.$refs.scroller.saveScrollPosition();
+
+                  if (scrollID) {
+                    _this2.nextIndicesNeedingSizeComputationChunked();
+
+                    _this2.$refs.scroller.busy = true;
+                  }
+
+                  _this2.didDoAComputation = true;
+                }
+
+                i = 0;
+
+              case 3:
+                if (!(i < _this2.chunkedTickInterval)) {
+                  _context.next = 10;
+                  break;
+                }
+
+                if (scrollID && i === 4) _this2.$refs.scroller.restoreScrollPosition(scrollID, false);
+                _context.next = 7;
+                return _this2.$nextTick();
+
+              case 7:
+                i++;
+                _context.next = 3;
+                break;
+
+              case 10:
+                if (scrollID) {
+                  _this2.$refs.scroller.restoreScrollPosition(scrollID);
+                }
+
+                _this2.$refs.scroller.busy = false;
+
+                if (!(!_this2.hasMoreToCompute && _this2.didDoAComputation)) {
+                  _context.next = 15;
+                  break;
+                }
+
+                _this2.didDoAComputation = false;
+                return _context.abrupt("return");
+
+              case 15:
+                _this2.scheduleNextSizeComputation();
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
+  }, {
+    key: "computeDependenciesChanged",
+    value: function computeDependenciesChanged(needsComputation) {
+      if (!needsComputation) return;
+      if (this.didDoAComputation) return;
+      this.scheduleNextSizeComputation();
+    }
+  }, {
+    key: "nextIndicesNeedingSizeComputationChunked",
+
+    /**
+     * Loads the next ten indices needing a size computation
+     */
+    value: function nextIndicesNeedingSizeComputationChunked() {
+      if (this.chunkedResolution === false) return;
+      this.indicesNeedingSizeComputationChunked = (this.priorityIndicesNeedingSizeComputation || this.indicesNeedingSizeComputation).slice(0, this.chunkedResolution);
+    }
+  }, {
     key: "itemsChanged",
 
     /** Watchers */
@@ -1653,7 +1770,7 @@ var DynamicScrollervue_type_script_lang_ts_DynamicScroller = /*#__PURE__*/functi
   }, {
     key: "scrollToBottom",
     value: function scrollToBottom() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.$_scrollingToBottom) return;
       this.$_scrollingToBottom = true;
@@ -1667,8 +1784,8 @@ var DynamicScrollervue_type_script_lang_ts_DynamicScroller = /*#__PURE__*/functi
           requestAnimationFrame(function () {
             el.scrollTop = el.scrollHeight + 5000;
 
-            if (_this2.$_undefinedSizes === 0) {
-              _this2.$_scrollingToBottom = false;
+            if (_this3.$_undefinedSizes === 0) {
+              _this3.$_scrollingToBottom = false;
             } else {
               requestAnimationFrame(cb);
             }
@@ -1691,19 +1808,59 @@ var DynamicScrollervue_type_script_lang_ts_DynamicScroller = /*#__PURE__*/functi
         var item = items[i];
         var id = simpleArray ? i : item[keyField];
         var size = sizes[id];
+        var needsComputation = false;
 
         if (typeof size === 'undefined' && !this.$_undefinedMap[id]) {
           size = 0;
+          needsComputation = true;
         }
 
         result.push({
           item: item,
           id: id,
-          size: size
+          size: size,
+          needsComputation: needsComputation
         });
       }
 
       return result;
+    }
+    /**
+     * Returns items that do not have a resolved size yet, in order of importance for resolution
+     */
+
+  }, {
+    key: "indicesNeedingSizeComputation",
+    get: function get() {
+      if (this.chunkedResolution === false) return [];
+      return this.itemsWithSize.map(function (_ref2, index) {
+        var needsComputation = _ref2.needsComputation;
+        return needsComputation ? index : -1;
+      }).filter(function (i) {
+        return i > -1;
+      }).sort();
+    }
+    /**
+     * Returns items stemming from the start index that need computation–these are important to load ASAP because of thrashing issues
+     */
+
+  }, {
+    key: "priorityIndicesNeedingSizeComputation",
+    get: function get() {
+      this.indicesNeedingSizeComputation;
+      if (!this.$refs.scroller) return null;
+      if (typeof this.$refs.scroller.$_lastStartIndex !== 'number') return null;
+      var priorityIndices = this.indicesNeedingSizeComputation.slice(0, this.$refs.scroller.$_lastStartIndex).sort(function (a, b) {
+        return b - a;
+      });
+      console.log(priorityIndices);
+      if (priorityIndices.length === 0) return null;
+      return priorityIndices;
+    }
+  }, {
+    key: "hasMoreToCompute",
+    get: function get() {
+      return !!this.priorityIndicesNeedingSizeComputation || this.indicesNeedingSizeComputation.length > 0;
     }
   }, {
     key: "listeners",
@@ -1726,6 +1883,16 @@ var DynamicScrollervue_type_script_lang_ts_DynamicScroller = /*#__PURE__*/functi
 Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["b" /* Prop */])({
   required: true
 })], DynamicScrollervue_type_script_lang_ts_DynamicScroller.prototype, "minItemSize", void 0);
+
+Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["b" /* Prop */])({
+  default: 25
+})], DynamicScrollervue_type_script_lang_ts_DynamicScroller.prototype, "chunkedResolution", void 0);
+
+Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["b" /* Prop */])({
+  default: 5
+})], DynamicScrollervue_type_script_lang_ts_DynamicScroller.prototype, "chunkedTickInterval", void 0);
+
+Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["d" /* Watch */])('hasMoreToCompute')], DynamicScrollervue_type_script_lang_ts_DynamicScroller.prototype, "computeDependenciesChanged", null);
 
 Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["d" /* Watch */])('items')], DynamicScrollervue_type_script_lang_ts_DynamicScroller.prototype, "itemsChanged", null);
 
@@ -2015,6 +2182,32 @@ module.exports = {
 
 /***/ }),
 
+/***/ "4de4":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $filter = __webpack_require__("b727").filter;
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+// Edge 14- issue
+var USES_TO_LENGTH = arrayMethodUsesToLength('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "4df4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2060,23 +2253,6 @@ module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undef
   result.length = index;
   return result;
 };
-
-
-/***/ }),
-
-/***/ "4ec9":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var collection = __webpack_require__("6d61");
-var collectionStrong = __webpack_require__("6566");
-
-// `Map` constructor
-// https://tc39.github.io/ecma262/#sec-map-objects
-module.exports = collection('Map', function (init) {
-  return function Map() { return init(this, arguments.length ? arguments[0] : undefined); };
-}, collectionStrong);
 
 
 /***/ }),
@@ -2926,200 +3102,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "6566":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var defineProperty = __webpack_require__("9bf2").f;
-var create = __webpack_require__("7c73");
-var redefineAll = __webpack_require__("e2cc");
-var bind = __webpack_require__("0366");
-var anInstance = __webpack_require__("19aa");
-var iterate = __webpack_require__("2266");
-var defineIterator = __webpack_require__("7dd0");
-var setSpecies = __webpack_require__("2626");
-var DESCRIPTORS = __webpack_require__("83ab");
-var fastKey = __webpack_require__("f183").fastKey;
-var InternalStateModule = __webpack_require__("69f3");
-
-var setInternalState = InternalStateModule.set;
-var internalStateGetterFor = InternalStateModule.getterFor;
-
-module.exports = {
-  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
-    var C = wrapper(function (that, iterable) {
-      anInstance(that, C, CONSTRUCTOR_NAME);
-      setInternalState(that, {
-        type: CONSTRUCTOR_NAME,
-        index: create(null),
-        first: undefined,
-        last: undefined,
-        size: 0
-      });
-      if (!DESCRIPTORS) that.size = 0;
-      if (iterable != undefined) iterate(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
-    });
-
-    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
-
-    var define = function (that, key, value) {
-      var state = getInternalState(that);
-      var entry = getEntry(that, key);
-      var previous, index;
-      // change existing entry
-      if (entry) {
-        entry.value = value;
-      // create new entry
-      } else {
-        state.last = entry = {
-          index: index = fastKey(key, true),
-          key: key,
-          value: value,
-          previous: previous = state.last,
-          next: undefined,
-          removed: false
-        };
-        if (!state.first) state.first = entry;
-        if (previous) previous.next = entry;
-        if (DESCRIPTORS) state.size++;
-        else that.size++;
-        // add to index
-        if (index !== 'F') state.index[index] = entry;
-      } return that;
-    };
-
-    var getEntry = function (that, key) {
-      var state = getInternalState(that);
-      // fast case
-      var index = fastKey(key);
-      var entry;
-      if (index !== 'F') return state.index[index];
-      // frozen object case
-      for (entry = state.first; entry; entry = entry.next) {
-        if (entry.key == key) return entry;
-      }
-    };
-
-    redefineAll(C.prototype, {
-      // 23.1.3.1 Map.prototype.clear()
-      // 23.2.3.2 Set.prototype.clear()
-      clear: function clear() {
-        var that = this;
-        var state = getInternalState(that);
-        var data = state.index;
-        var entry = state.first;
-        while (entry) {
-          entry.removed = true;
-          if (entry.previous) entry.previous = entry.previous.next = undefined;
-          delete data[entry.index];
-          entry = entry.next;
-        }
-        state.first = state.last = undefined;
-        if (DESCRIPTORS) state.size = 0;
-        else that.size = 0;
-      },
-      // 23.1.3.3 Map.prototype.delete(key)
-      // 23.2.3.4 Set.prototype.delete(value)
-      'delete': function (key) {
-        var that = this;
-        var state = getInternalState(that);
-        var entry = getEntry(that, key);
-        if (entry) {
-          var next = entry.next;
-          var prev = entry.previous;
-          delete state.index[entry.index];
-          entry.removed = true;
-          if (prev) prev.next = next;
-          if (next) next.previous = prev;
-          if (state.first == entry) state.first = next;
-          if (state.last == entry) state.last = prev;
-          if (DESCRIPTORS) state.size--;
-          else that.size--;
-        } return !!entry;
-      },
-      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
-      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
-      forEach: function forEach(callbackfn /* , that = undefined */) {
-        var state = getInternalState(this);
-        var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
-        var entry;
-        while (entry = entry ? entry.next : state.first) {
-          boundFunction(entry.value, entry.key, this);
-          // revert to the last existing entry
-          while (entry && entry.removed) entry = entry.previous;
-        }
-      },
-      // 23.1.3.7 Map.prototype.has(key)
-      // 23.2.3.7 Set.prototype.has(value)
-      has: function has(key) {
-        return !!getEntry(this, key);
-      }
-    });
-
-    redefineAll(C.prototype, IS_MAP ? {
-      // 23.1.3.6 Map.prototype.get(key)
-      get: function get(key) {
-        var entry = getEntry(this, key);
-        return entry && entry.value;
-      },
-      // 23.1.3.9 Map.prototype.set(key, value)
-      set: function set(key, value) {
-        return define(this, key === 0 ? 0 : key, value);
-      }
-    } : {
-      // 23.2.3.1 Set.prototype.add(value)
-      add: function add(value) {
-        return define(this, value = value === 0 ? 0 : value, value);
-      }
-    });
-    if (DESCRIPTORS) defineProperty(C.prototype, 'size', {
-      get: function () {
-        return getInternalState(this).size;
-      }
-    });
-    return C;
-  },
-  setStrong: function (C, CONSTRUCTOR_NAME, IS_MAP) {
-    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
-    var getInternalCollectionState = internalStateGetterFor(CONSTRUCTOR_NAME);
-    var getInternalIteratorState = internalStateGetterFor(ITERATOR_NAME);
-    // add .keys, .values, .entries, [@@iterator]
-    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
-    defineIterator(C, CONSTRUCTOR_NAME, function (iterated, kind) {
-      setInternalState(this, {
-        type: ITERATOR_NAME,
-        target: iterated,
-        state: getInternalCollectionState(iterated),
-        kind: kind,
-        last: undefined
-      });
-    }, function () {
-      var state = getInternalIteratorState(this);
-      var kind = state.kind;
-      var entry = state.last;
-      // revert to the last existing entry
-      while (entry && entry.removed) entry = entry.previous;
-      // get next entry
-      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
-        // or finish the iteration
-        state.target = undefined;
-        return { value: undefined, done: true };
-      }
-      // return step by kind
-      if (kind == 'keys') return { value: entry.key, done: false };
-      if (kind == 'values') return { value: entry.value, done: false };
-      return { value: [entry.key, entry.value], done: false };
-    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
-
-    // add [@@species], 23.1.2.2, 23.2.2.2
-    setSpecies(CONSTRUCTOR_NAME);
-  }
-};
-
-
-/***/ }),
-
 /***/ "65f0":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3218,110 +3200,20 @@ module.exports = {
 
 /***/ }),
 
-/***/ "6d61":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "6b75":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _arrayLikeToArray; });
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
 
-var $ = __webpack_require__("23e7");
-var global = __webpack_require__("da84");
-var isForced = __webpack_require__("94ca");
-var redefine = __webpack_require__("6eeb");
-var InternalMetadataModule = __webpack_require__("f183");
-var iterate = __webpack_require__("2266");
-var anInstance = __webpack_require__("19aa");
-var isObject = __webpack_require__("861d");
-var fails = __webpack_require__("d039");
-var checkCorrectnessOfIteration = __webpack_require__("1c7e");
-var setToStringTag = __webpack_require__("d44e");
-var inheritIfRequired = __webpack_require__("7156");
-
-module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
-  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
-  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
-  var ADDER = IS_MAP ? 'set' : 'add';
-  var NativeConstructor = global[CONSTRUCTOR_NAME];
-  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
-  var Constructor = NativeConstructor;
-  var exported = {};
-
-  var fixMethod = function (KEY) {
-    var nativeMethod = NativePrototype[KEY];
-    redefine(NativePrototype, KEY,
-      KEY == 'add' ? function add(value) {
-        nativeMethod.call(this, value === 0 ? 0 : value);
-        return this;
-      } : KEY == 'delete' ? function (key) {
-        return IS_WEAK && !isObject(key) ? false : nativeMethod.call(this, key === 0 ? 0 : key);
-      } : KEY == 'get' ? function get(key) {
-        return IS_WEAK && !isObject(key) ? undefined : nativeMethod.call(this, key === 0 ? 0 : key);
-      } : KEY == 'has' ? function has(key) {
-        return IS_WEAK && !isObject(key) ? false : nativeMethod.call(this, key === 0 ? 0 : key);
-      } : function set(key, value) {
-        nativeMethod.call(this, key === 0 ? 0 : key, value);
-        return this;
-      }
-    );
-  };
-
-  // eslint-disable-next-line max-len
-  if (isForced(CONSTRUCTOR_NAME, typeof NativeConstructor != 'function' || !(IS_WEAK || NativePrototype.forEach && !fails(function () {
-    new NativeConstructor().entries().next();
-  })))) {
-    // create collection constructor
-    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
-    InternalMetadataModule.REQUIRED = true;
-  } else if (isForced(CONSTRUCTOR_NAME, true)) {
-    var instance = new Constructor();
-    // early implementations not supports chaining
-    var HASNT_CHAINING = instance[ADDER](IS_WEAK ? {} : -0, 1) != instance;
-    // V8 ~ Chromium 40- weak-collections throws on primitives, but should return false
-    var THROWS_ON_PRIMITIVES = fails(function () { instance.has(1); });
-    // most early implementations doesn't supports iterables, most modern - not close it correctly
-    // eslint-disable-next-line no-new
-    var ACCEPT_ITERABLES = checkCorrectnessOfIteration(function (iterable) { new NativeConstructor(iterable); });
-    // for early implementations -0 and +0 not the same
-    var BUGGY_ZERO = !IS_WEAK && fails(function () {
-      // V8 ~ Chromium 42- fails only with 5+ elements
-      var $instance = new NativeConstructor();
-      var index = 5;
-      while (index--) $instance[ADDER](index, index);
-      return !$instance.has(-0);
-    });
-
-    if (!ACCEPT_ITERABLES) {
-      Constructor = wrapper(function (dummy, iterable) {
-        anInstance(dummy, Constructor, CONSTRUCTOR_NAME);
-        var that = inheritIfRequired(new NativeConstructor(), dummy, Constructor);
-        if (iterable != undefined) iterate(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
-        return that;
-      });
-      Constructor.prototype = NativePrototype;
-      NativePrototype.constructor = Constructor;
-    }
-
-    if (THROWS_ON_PRIMITIVES || BUGGY_ZERO) {
-      fixMethod('delete');
-      fixMethod('has');
-      IS_MAP && fixMethod('get');
-    }
-
-    if (BUGGY_ZERO || HASNT_CHAINING) fixMethod(ADDER);
-
-    // weak collections should not contains .clear method
-    if (IS_WEAK && NativePrototype.clear) delete NativePrototype.clear;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
   }
 
-  exported[CONSTRUCTOR_NAME] = Constructor;
-  $({ global: true, forced: Constructor != NativeConstructor }, exported);
-
-  setToStringTag(Constructor, CONSTRUCTOR_NAME);
-
-  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
-
-  return Constructor;
-};
-
+  return arr2;
+}
 
 /***/ }),
 
@@ -3368,30 +3260,6 @@ var TEMPLATE = String(String).split('String');
 })(Function.prototype, 'toString', function toString() {
   return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
 });
-
-
-/***/ }),
-
-/***/ "7156":
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__("861d");
-var setPrototypeOf = __webpack_require__("d2bb");
-
-// makes subclassing work correct for wrapped built-ins
-module.exports = function ($this, dummy, Wrapper) {
-  var NewTarget, NewTargetPrototype;
-  if (
-    // it can work only with native `setPrototypeOf`
-    setPrototypeOf &&
-    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
-    typeof (NewTarget = dummy.constructor) == 'function' &&
-    NewTarget !== Wrapper &&
-    isObject(NewTargetPrototype = NewTarget.prototype) &&
-    NewTargetPrototype !== Wrapper.prototype
-  ) setPrototypeOf($this, NewTargetPrototype);
-  return $this;
-};
 
 
 /***/ }),
@@ -4289,17 +4157,18 @@ module.exports = isForced;
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fbbd04-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RecycleScroller.vue?vue&type=template&id=1488c7b1&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fbbd04-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RecycleScroller.vue?vue&type=template&id=dd9e6882&
 var render = function () {
 var _obj, _obj$1;
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"observe-visibility",rawName:"v-observe-visibility",value:(_vm.handleVisibilityChange),expression:"handleVisibilityChange"}],staticClass:"vue-recycle-scroller",class:( _obj = {
     ready: _vm.ready,
+    'busy': _vm.busy,
     'page-mode': _vm.pageMode
-  }, _obj[("direction-" + _vm.direction)] = true, _obj ),on:{"&scroll":function($event){return _vm.handleScroll($event)}}},[(_vm.$slots.before)?_c('div',{staticClass:"vue-recycle-scroller__slot"},[_vm._t("before")],2):_vm._e(),_c('div',{ref:"wrapper",staticClass:"vue-recycle-scroller__item-wrapper",style:(( _obj$1 = {}, _obj$1[_vm.direction === 'vertical' ? 'minHeight' : 'minWidth'] = _vm.totalSize + 'px', _obj$1 ))},_vm._l((_vm.pool),function(view){return _c('div',_vm._g({key:view.nr.id,staticClass:"vue-recycle-scroller__item-view",class:{ hover: _vm.hoverKey === view.nr.key },style:(_vm.ready
+  }, _obj[("direction-" + _vm.direction)] = true, _obj ),on:{"&scroll":function($event){return _vm.handleScroll($event)}}},[(_vm.$slots.before || _vm.invisibleRenderIndices.length > 0)?_c('div',{staticClass:"vue-recycle-scroller__slot"},[_vm._l((_vm.invisibleRenderIndices),function(index){return _c('div',{key:("invisible-" + index),staticStyle:{"position":"absolute","top":"0","left":"0","opacity":"0","pointer-events":"none"}},[_vm._t("default",null,{"item":_vm.items[index],"index":index,"active":true})],2)}),_vm._t("before")],2):_vm._e(),_c('div',{ref:"wrapper",staticClass:"vue-recycle-scroller__item-wrapper",style:(( _obj$1 = {}, _obj$1[_vm.direction === 'vertical' ? 'minHeight' : 'minWidth'] = _vm.totalSize + 'px', _obj$1 ))},_vm._l((_vm.pool),function(view){return _c('div',_vm._g({key:view.nr.id,ref:"poolItems",refInFor:true,staticClass:"vue-recycle-scroller__item-view",class:{ hover: _vm.hoverKey === view.nr.key },style:(_vm.ready
           ? {
               transform: ("translate" + (_vm.direction === 'vertical' ? 'Y' : 'X') + "(" + (view.position) + "px)"),
             }
-          : null)},
+          : null),attrs:{"attr-real":view.position > -9999,"attr-position":view.position,"attr-key":view.nr.key}},
         _vm.detectHover
           ? {
               mouseenter: function () { return (_vm.hoverKey = view.nr.key); },
@@ -4310,28 +4179,16 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/RecycleScroller.vue?vue&type=template&id=1488c7b1&
+// CONCATENATED MODULE: ./src/components/RecycleScroller.vue?vue&type=template&id=dd9e6882&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__("4de4");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find-index.js
 var es_array_find_index = __webpack_require__("c740");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
-var es_array_iterator = __webpack_require__("e260");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.map.js
-var es_map = __webpack_require__("4ec9");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __webpack_require__("d3b7");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
-var es_string_iterator = __webpack_require__("3ca3");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
-var web_dom_collections_iterator = __webpack_require__("ddb0");
 
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
 var runtime = __webpack_require__("96cf");
@@ -4351,6 +4208,21 @@ var inherits = __webpack_require__("262e");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createSuper.js + 4 modules
 var createSuper = __webpack_require__("2caf");
 
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__("9ab4");
 
@@ -4373,8 +4245,109 @@ var config = __webpack_require__("d70b");
 // EXTERNAL MODULE: ./src/components/common.ts
 var common = __webpack_require__("2180");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.slice.js
+var es_array_slice = __webpack_require__("fb6a");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d3b7");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
+var es_regexp_to_string = __webpack_require__("25f0");
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+var arrayLikeToArray = __webpack_require__("6b75");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return Object(arrayLikeToArray["a" /* default */])(arr);
+}
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
+var es_symbol = __webpack_require__("a4d3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
+var es_symbol_description = __webpack_require__("e01a");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.iterator.js
+var es_symbol_iterator = __webpack_require__("d28b");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.from.js
+var es_array_from = __webpack_require__("a630");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
+var es_string_iterator = __webpack_require__("3ca3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
+var web_dom_collections_iterator = __webpack_require__("ddb0");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+
+
+
+
+
+
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+var unsupportedIterableToArray = __webpack_require__("06c5");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
+
+
+
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || Object(unsupportedIterableToArray["a" /* default */])(arr) || _nonIterableSpread();
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toArray.js
+
+
+
+
+function _toArray(arr) {
+  return _arrayWithHoles(arr) || _iterableToArray(arr) || Object(unsupportedIterableToArray["a" /* default */])(arr) || _nonIterableRest();
+}
 // CONCATENATED MODULE: ./src/utils.ts
+
+
+
+
+
+
 var supportsPassive = false;
+function interleave(_ref, ys) {
+  var _ref2 = _toArray(_ref),
+      x = _ref2[0],
+      xs = _ref2.slice(1);
+
+  if (!x) return ys;
+  return [x].concat(_toConsumableArray(interleave(xs, ys)));
+}
+function getRandomString() {
+  var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 16;
+  var s = '';
+
+  do {
+    s += Math.random().toString(36).substr(2);
+  } while (s.length < length);
+
+  return s;
+}
 
 if (typeof window !== 'undefined') {
   supportsPassive = false;
@@ -4388,9 +4361,12 @@ if (typeof window !== 'undefined') {
     window.addEventListener('test', null, opts);
   } catch (e) {}
 }
+// CONCATENATED MODULE: ./src/types.ts
+
+
+
+var NoKey = Symbol('NoKey');
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--14-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RecycleScroller.vue?vue&type=script&lang=ts&
-
-
 
 
 
@@ -4412,6 +4388,10 @@ if (typeof window !== 'undefined') {
 
 var uid = 0;
 
+var RecycleScrollervue_type_script_lang_ts_NewUnusedRecord = function NewUnusedRecord() {
+  return _defineProperty({}, NoKey, []);
+};
+
 var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/function (_Common) {
   Object(inherits["a" /* default */])(RecycleScroller, _Common);
 
@@ -4429,6 +4409,8 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
     _this.hoverKey = null;
     _this.scrollTimeout = 0;
     _this.listenerTarget = null;
+    _this.scrolling = false;
+    _this.busy = false;
     return _this;
   }
 
@@ -4439,10 +4421,11 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
     value: function created() {
       this.$_startIndex = 0;
       this.$_endIndex = 0;
-      this.$_views = new Map();
-      this.$_unusedViews = new Map();
+      this.$_views = {};
+      this.$_unusedViews = RecycleScrollervue_type_script_lang_ts_NewUnusedRecord();
       this.$_scrollDirty = false;
       this.$_lastUpdateScrollPosition = 0;
+      this.$_scrollPositions = {};
 
       if (this.prerender) {
         this.$_prerender = true;
@@ -4507,13 +4490,113 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
     /** Methods */
 
   }, {
+    key: "resolveKey",
+    value: function resolveKey(item) {
+      var keyField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.keyField;
+      return (keyField ? item[keyField] : item) || null;
+    }
+    /**
+     * Resolves the key index that should be used for the given item
+     * @param item the item to resolve
+     * @param typeField the cached type field, if omitted it is retrieved from this
+     */
+
+  }, {
+    key: "resolveType",
+    value: function resolveType(item) {
+      var typeField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.typeField;
+      return typeField ? item[typeField] || NoKey : NoKey;
+    }
+    /**
+     * Returns an existing view for an index, or creates a new view corresponding to the given index
+     * @param index the index of the item to create
+     */
+
+  }, {
+    key: "makeView",
+    value: function makeView(index) {
+      var reuse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var push = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+      var item = this.items[index];
+      var key = this.resolveKey(item, this.keyField);
+
+      if (key === null) {
+        throw new Error("Key is ".concat(key, " on item (keyField is '").concat(this.keyField, "')"));
+      }
+
+      var view = this.$_views[key];
+
+      if (view) {
+        view.nr.used = true;
+        view.item = item;
+        return view;
+      }
+
+      var type = this.resolveType(item, this.typeField);
+      var unusedPool = this.$_unusedViews[type || NoKey];
+      /**
+       * Takes an existing view and personalizes it to the current item
+       * @param view view to mutate
+       */
+
+      var personalize = function personalize(view) {
+        view.item = item;
+        view.nr.used = true;
+        view.nr.index = index;
+        view.nr.key = key;
+        view.nr.type = type;
+        return view;
+      };
+
+      if (reuse) {
+        if (this.$_continuous) {
+          // Reuse an existing view
+          if (unusedPool && unusedPool.length) {
+            if (view = unusedPool.pop()) {
+              personalize(view);
+            }
+          } else {
+            // Birth a new view
+            view = this.addView(this.pool, index, item, key, type, push);
+          }
+        } else {
+          if (!unusedPool || unusedPool.length === 0) {
+            view = this.addView(this.pool, index, item, key, type, push);
+            this.unuseView(view, true);
+            unusedPool = this.$_unusedViews[type || NoKey];
+          }
+
+          view = personalize(unusedPool.shift());
+        }
+      } else {
+        view = this.addView(this.pool, index, item, key, type, push);
+      }
+
+      this.$_views[key] = view;
+      return view;
+    }
+    /**
+     * Adds an item to the provided pool, constructing a PoolItem
+     *
+     * @param pool pool to add the item to
+     * @param index index of the item being added
+     * @param item the inner item data passed to the implementation
+     * @param key the vue :key value
+     * @param type ???
+     */
+
+  }, {
     key: "addView",
     value: function addView(pool, index, item, key, type) {
+      var push = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
       var view = {
         item: item,
-        position: 0,
-        nr: undefined
+        position: 0
       };
+      /**
+       * Defines the non-reactive data for this item, Vue will not observe changes here
+       */
+
       Object.defineProperty(view, 'nr', {
         configurable: false,
         value: {
@@ -4524,20 +4607,26 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
           type: type
         }
       });
-      pool.push(view);
+      if (push) pool.push(view);
       return view;
     }
+    /**
+     * Inserts a view into the unused pool
+     * @param view the view to unuse
+     * @param fake whether this is a placeholder view
+     */
+
   }, {
     key: "unuseView",
     value: function unuseView(view) {
       var fake = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var unusedViews = this.$_unusedViews;
       var type = view.nr.type;
-      var unusedPool = unusedViews.get(type);
+      var unusedPool = unusedViews[type];
 
       if (!unusedPool) {
         unusedPool = [];
-        unusedViews.set(type, unusedPool);
+        unusedViews[type] = unusedPool;
       }
 
       unusedPool.push(view);
@@ -4545,7 +4634,7 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
       if (!fake) {
         view.nr.used = false;
         view.position = -9999;
-        this.$_views.delete(view.nr.key);
+        this.$_views[view.nr.key] = undefined;
       }
     }
   }, {
@@ -4559,32 +4648,28 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
     value: function handleScroll() {
       var _this2 = this;
 
-      var job = function job() {
-        if (!_this2.$_scrollDirty) {
-          _this2.$_scrollDirty = true;
-          requestAnimationFrame(function () {
-            _this2.$_scrollDirty = false;
+      this.scrolling = true;
 
-            var _this2$updateVisibleI = _this2.updateVisibleItems(false),
-                continuous = _this2$updateVisibleI.continuous; // It seems sometimes chrome doesn't fire scroll event :/
-            // When non continous scrolling is ending, we force a refresh
+      if (!this.$_scrollDirty) {
+        this.$_scrollDirty = true;
+        requestAnimationFrame(function () {
+          _this2.$_scrollDirty = false;
+
+          var continuous = _this2.updateVisibleItems(false); // It seems sometimes chrome doesn't fire scroll event :/
+          // When non continous scrolling is ending, we force a refresh
 
 
-            if (!continuous) {
-              clearTimeout(_this2.$_refreshTimeout);
-              _this2.$_refreshTimeout = setTimeout(_this2.handleScroll, 100);
-            }
-          });
-        }
-      };
+          if (!continuous) {
+            clearTimeout(_this2.$_refreshTimeout);
+            _this2.$_refreshTimeout = setTimeout(_this2.handleScroll, 100);
+          }
+        });
+      }
 
       clearTimeout(this.scrollTimeout);
-
-      if (this.debounce) {
-        this.scrollTimeout = setTimeout(job, +this.debounce);
-      } else {
-        job();
-      }
+      this.scrollTimeout = setTimeout(function () {
+        _this2.scrolling = false;
+      }, 100);
     }
   }, {
     key: "handleVisibilityChange",
@@ -4602,29 +4687,40 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
         }
       }
     }
+    /**
+     * Determines the range of items to be rendered
+     * @param checkPositionDiff whether to take the position difference into account when computing
+     * @returns render range, or null if the position hasn't changed enough
+     */
+
   }, {
-    key: "updateVisibleItems",
-    value: function updateVisibleItems(checkItem) {
-      var checkPositionDiff = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var itemSize = this.itemSize;
-      var minItemSize = this.$_computedMinItemSize;
-      var typeField = this.typeField;
-      var keyField = this.simpleArray ? null : this.keyField;
+    key: "computeRenderRange",
+    value: function computeRenderRange() {
+      var checkPositionDiff = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (this.busy && typeof this.$_lastStartIndex === 'number' && typeof this.$_lastEndIndex === 'number' && typeof this.$_lastTotalSize !== 'undefined') {
+        return {
+          startIndex: this.$_lastStartIndex,
+          endIndex: this.$_lastEndIndex,
+          totalSize: this.$_lastTotalSize
+        };
+      }
+
       var items = this.items;
       var count = items.length;
+      var itemSize = this.itemSize;
+      var minItemSize = this.$_computedMinItemSize;
       var sizes = this.sizes;
-      var views = this.$_views;
-      var unusedViews = this.$_unusedViews;
-      var pool = this.pool;
-      var startIndex, endIndex;
-      var totalSize;
+      var startIndex, endIndex, totalSize;
 
       if (!count) {
+        // Reset all the things
         startIndex = endIndex = totalSize = 0;
       } else if (this.$_prerender) {
+        // SSR, render from the start to the configured pre-render index
         startIndex = 0;
         endIndex = this.prerender;
-        totalSize = null;
+        totalSize = 0;
       } else {
         var scroll = this.getScroll(); // Skip update if use hasn't scrolled enough
 
@@ -4633,9 +4729,7 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
           if (positionDiff < 0) positionDiff = -positionDiff;
 
           if (itemSize === null && positionDiff < minItemSize || positionDiff < (itemSize || 0)) {
-            return {
-              continuous: true
-            };
+            return null;
           }
         }
 
@@ -4691,132 +4785,19 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
         }
       }
 
-      if (endIndex - startIndex > config["a" /* default */].itemsLimit) {
-        this.itemsLimitError();
-      }
-
-      this.totalSize = totalSize || 0;
-      var view;
-      var continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex;
-
-      if (this.$_continuous !== continuous) {
-        if (continuous) {
-          views.clear();
-          unusedViews.clear();
-
-          for (var _i = 0, l = pool.length; _i < l; _i++) {
-            view = pool[_i];
-            this.unuseView(view);
-          }
-        }
-
-        this.$_continuous = continuous;
-      } else if (continuous) {
-        for (var _i2 = 0, _l = pool.length; _i2 < _l; _i2++) {
-          view = pool[_i2];
-
-          if (view.nr.used) {
-            // Update view item index
-            if (checkItem) {
-              view.nr.index = items.findIndex(function (item) {
-                return keyField ? item[keyField] === view.item[keyField] : item === view.item;
-              });
-            } // Check if index is still in visible range
-
-
-            if (view.nr.index === -1 || view.nr.index < startIndex || view.nr.index >= endIndex) {
-              this.unuseView(view);
-            }
-          }
-        }
-      }
-
-      var unusedIndex = continuous ? null : new Map();
-      var item, type, unusedPool;
-      var v;
-
-      for (var _i3 = startIndex; _i3 < endIndex; _i3++) {
-        item = items[_i3];
-        var key = keyField ? item[keyField] : item;
-
-        if (key === null) {
-          throw new Error("Key is ".concat(key, " on item (keyField is '").concat(keyField, "')"));
-        }
-
-        view = views.get(key);
-
-        if (!itemSize && !sizes[_i3].size) {
-          if (view) this.unuseView(view);
-          continue;
-        } // No view assigned to item
-
-
-        if (!view) {
-          if (_i3 === items.length - 1) this.$emit('scrolledtoend');
-          if (_i3 === 0) this.$emit('scrolledtobegin');
-          type = item[typeField];
-          unusedPool = unusedViews.get(type);
-
-          if (continuous) {
-            // Reuse existing view
-            if (unusedPool && unusedPool.length) {
-              if (view = unusedPool.pop()) {
-                view.item = item;
-                view.nr.used = true;
-                view.nr.index = _i3;
-                view.nr.key = key;
-                view.nr.type = type;
-              }
-            } else {
-              view = this.addView(pool, _i3, item, key, type);
-            }
-          } else if (unusedIndex) {
-            // Use existing view
-            // We don't care if they are already used
-            // because we are not in continous scrolling
-            v = unusedIndex.get(type) || 0;
-
-            if (!unusedPool || v >= unusedPool.length) {
-              view = this.addView(pool, _i3, item, key, type);
-              this.unuseView(view, true);
-              unusedPool = unusedViews.get(type);
-            }
-
-            view = unusedPool[v];
-            view.item = item;
-            view.nr.used = true;
-            view.nr.index = _i3;
-            view.nr.key = key;
-            view.nr.type = type;
-            unusedIndex.set(type, v + 1);
-            v++;
-          }
-
-          views.set(key, view);
-        } else {
-          view.nr.used = true;
-          view.item = item;
-        } // Update position
-
-
-        if (itemSize === null) {
-          view.position = sizes[_i3 - 1].accumulator;
-        } else {
-          view.position = _i3 * itemSize;
-        }
-      }
-
-      this.$_startIndex = startIndex;
-      this.$_endIndex = endIndex;
-      if (this.emitUpdate) this.$emit('update', startIndex, endIndex); // After the user has finished scrolling
-      // Sort views so text selection is correct
-
-      clearTimeout(this.$_sortTimer);
-      this.$_sortTimer = setTimeout(this.sortViews, 300);
+      this.$_lastStartIndex = startIndex;
+      this.$_lastEndIndex = endIndex;
+      this.$_lastTotalSize = this.totalSize = totalSize;
       return {
-        continuous: continuous
+        startIndex: startIndex,
+        endIndex: endIndex,
+        totalSize: totalSize
       };
     }
+    /**
+     * Gets the current scroll positions
+     */
+
   }, {
     key: "getScroll",
     value: function getScroll() {
@@ -4858,6 +4839,149 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
 
       return scrollState;
     }
+    /**
+     * Rebuilds the render pool using a given range
+     * @param renderRange the range of items to render, returned by computeRenderRange
+     * @param checkItem whether to ensure all pool items have the same index
+     */
+
+  }, {
+    key: "applyRenderRange",
+    value: function applyRenderRange(_ref2, checkItem) {
+      var _this4 = this;
+
+      var startIndex = _ref2.startIndex,
+          endIndex = _ref2.endIndex;
+      var continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex;
+      var item, view;
+
+      if (this.$_continuous !== continuous) {
+        // Teardown all views
+        if (continuous) {
+          this.$_views = {};
+          this.$_unusedViews = _defineProperty({}, NoKey, []);
+
+          for (var i = 0, l = this.pool.length; i < l; i++) {
+            view = this.pool[i];
+            this.unuseView(view);
+          }
+        }
+
+        this.$_continuous = continuous;
+      } else if (continuous) {
+        for (var _i = 0, _l = this.pool.length; _i < _l; _i++) {
+          view = this.pool[_i];
+
+          if (view.nr.used) {
+            // Update view item index
+            if (checkItem) {
+              view.nr.index = this.items.findIndex(function (item) {
+                return _this4.keyField ? item[_this4.keyField] === view.item[_this4.keyField] : item === view.item;
+              });
+            } // Check if index is still in visible range
+
+
+            if (view.nr.index === -1 || view.nr.index < startIndex || view.nr.index >= endIndex) {
+              this.unuseView(view);
+            }
+          }
+        }
+      }
+
+      for (var _i2 = startIndex; _i2 < endIndex; _i2++) {
+        if (_i2 === this.items.length - 1) this.$emit('scrolledtoend');
+        if (_i2 === 0) this.$emit('scrolledtobegin');
+        item = this.items[_i2];
+        var key = this.resolveKey(item, this.keyField);
+
+        if (key === null) {
+          throw new Error("Key is ".concat(key, " on item (keyField is '").concat(this.keyField, "')"));
+        }
+
+        view = this.$_views[key];
+
+        if (!this.itemSize && !this.sizes[_i2].size) {
+          // Discard because there's no size
+          if (view) this.unuseView(view);
+          continue;
+        }
+
+        view = this.makeView(_i2); // Update position
+
+        if (this.itemSize === null) {
+          view.position = this.sizes[_i2 - 1].accumulator;
+        } else {
+          view.position = _i2 * this.itemSize;
+        }
+      }
+
+      this.$_startIndex = startIndex;
+      this.$_endIndex = endIndex;
+      return continuous;
+    }
+    /**
+     * Updates the pool of visible items
+     * @param checkItem whether to ensure item indices are still accurate
+     * @param checkPositionDiff whether to abort update if the position hasn't changed enough
+     */
+
+  }, {
+    key: "updateVisibleItems",
+    value: function updateVisibleItems(checkItem) {
+      var checkPositionDiff = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var count = this.items.length;
+      var bounds = this.computeRenderRange(checkPositionDiff);
+
+      if (!bounds) {
+        return true;
+      }
+
+      var startIndex = bounds.startIndex,
+          endIndex = bounds.endIndex,
+          totalSize = bounds.totalSize;
+      if (startIndex < 0) startIndex = 0;
+      if (endIndex >= count) endIndex = count - 1;
+
+      if (endIndex - startIndex > config["a" /* default */].itemsLimit) {
+        this.itemsLimitError();
+      }
+
+      var continuous = this.applyRenderRange({
+        startIndex: startIndex,
+        endIndex: endIndex,
+        totalSize: totalSize
+      }, checkItem);
+      if (this.emitUpdate) this.$emit('update', startIndex, endIndex);
+      this.requestSortViews();
+      return continuous;
+    }
+    /**
+     * Sorts the render pool by index
+     */
+
+  }, {
+    key: "sortViews",
+    value: function sortViews() {
+      this.pool.sort(function (viewA, viewB) {
+        return viewA.nr.index - viewB.nr.index;
+      });
+    }
+    /**
+     * Debounced organization of render pool arary
+     */
+
+  }, {
+    key: "requestSortViews",
+    value: function requestSortViews() {
+      // After the user has finished scrolling
+      // Sort views so text selection is correct
+      clearTimeout(this.$_sortTimer);
+      this.$_sortTimer = setTimeout(this.sortViews, 300);
+    }
+    /**
+     * Returns the element to listen to scroll/resize events on
+     */
+
   }, {
     key: "getListenerTarget",
     value: function getListenerTarget() {
@@ -4869,6 +4993,10 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
 
       return target;
     }
+    /**
+     * Binds scroll/resize listeners to the configured listenerTarget
+     */
+
   }, {
     key: "addListeners",
     value: function addListeners() {
@@ -4880,6 +5008,10 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
       } : false);
       (_this$listenerTarget2 = this.listenerTarget) === null || _this$listenerTarget2 === void 0 ? void 0 : _this$listenerTarget2.addEventListener('resize', this.handleResize);
     }
+    /**
+     * Removes scroll/resize listeners from the configured listenerTarget
+     */
+
   }, {
     key: "removeListeners",
     value: function removeListeners() {
@@ -4888,9 +5020,15 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
       this.listenerTarget.removeEventListener('resize', this.handleResize);
       this.listenerTarget = null;
     }
+    /**
+     * Computes the current position of an item with the given index
+     * @param index index of the item to compute
+     * @returns scroll offset
+     */
+
   }, {
-    key: "scrollToItem",
-    value: function scrollToItem(index) {
+    key: "scrollPositionForItem",
+    value: function scrollPositionForItem(index) {
       var scroll;
 
       if (this.itemSize === null) {
@@ -4899,8 +5037,106 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
         scroll = index * this.itemSize;
       }
 
-      this.scrollToPosition(scroll);
+      return scroll;
     }
+    /**
+     * Computes the current position of an item with the given key
+     * @param key key of the item to compute
+     * @returns scroll offset
+     */
+
+  }, {
+    key: "scrollPositionForItemWithKey",
+    value: function scrollPositionForItemWithKey(key) {
+      var _this5 = this;
+
+      return this.scrollPositionForItem(this.items.findIndex(function (_ref3) {
+        var itemKey = _ref3[_this5.keyField];
+        return itemKey === key;
+      }));
+    }
+    /**
+     * Saves the current scroll position, to be restored later
+     * @returns unique string to fetch the scroll position later
+     */
+
+  }, {
+    key: "saveScrollPosition",
+    value: function saveScrollPosition() {
+      var scrollID = getRandomString();
+      var item = this.firstRealPoolItem();
+      if (!item) return null;
+      var key = item.getAttribute('attr-key');
+      key = +key || key;
+      if (key === null) return null;
+      this.$_scrollPositions[scrollID] = {
+        boundingY: item.getBoundingClientRect().y - this.$el.getBoundingClientRect().y,
+        key: key
+      };
+      return scrollID;
+    }
+    /**
+     * Returns the last rendered pool item
+     */
+
+  }, {
+    key: "lastRealPoolItem",
+    value: function lastRealPoolItem() {
+      return this.realPoolItems().reverse()[0] || null;
+    }
+    /**
+     * Returns the first rendered pool item
+     */
+
+  }, {
+    key: "firstRealPoolItem",
+    value: function firstRealPoolItem() {
+      return this.realPoolItems()[0] || null;
+    }
+    /**
+     * Returns real pool items sorted by their position
+     */
+
+  }, {
+    key: "realPoolItems",
+    value: function realPoolItems() {
+      var _this$$refs$poolItems;
+
+      var items = ((_this$$refs$poolItems = this.$refs.poolItems) === null || _this$$refs$poolItems === void 0 ? void 0 : _this$$refs$poolItems.filter(function (item) {
+        return item.getAttribute('attr-real') === 'true';
+      })) || [];
+      return items.sort(function (item1, item2) {
+        return +item1.getAttribute('attr-position') - +item2.getAttribute('attr-position');
+      });
+    }
+    /**
+     * Restores a previously saved scroll position
+     */
+
+  }, {
+    key: "restoreScrollPosition",
+    value: function restoreScrollPosition(id) {
+      var clear = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var saved = this.$_scrollPositions[id];
+      if (!saved) return;else if (clear) this.$_scrollPositions[id] = undefined;
+      var newPosition = this.scrollPositionForItemWithKey(saved.key);
+      this.scrollToPosition(newPosition - saved.boundingY);
+    }
+    /**
+     * Scrolls the item with the given index into view
+     * @param index index of the item to reveal
+     */
+
+  }, {
+    key: "scrollToItem",
+    value: function scrollToItem(index) {
+      this.scrollToPosition(this.scrollPositionForItem(index));
+    }
+    /**
+     * Scrolls the view to the given absolute position, in px
+     * @param position the position to scroll to
+     */
+
   }, {
     key: "scrollToPosition",
     value: function scrollToPosition(position) {
@@ -4910,24 +5146,25 @@ var RecycleScrollervue_type_script_lang_ts_RecycleScroller = /*#__PURE__*/functi
         this.$el.scrollLeft = position;
       }
     }
+    /**
+     * Raises an error regarding broken scrolling
+     */
+
   }, {
     key: "itemsLimitError",
     value: function itemsLimitError() {
-      var _this4 = this;
+      var _this6 = this;
 
       setTimeout(function () {
-        console.log('It seems the scroller element isn\'t scrolling, so it tries to render all the items at once.', 'Scroller:', _this4.$el);
+        console.log('It seems the scroller element isn\'t scrolling, so it tries to render all the items at once.', 'Scroller:', _this6.$el);
         console.log('Make sure the scroller has a fixed height (or width) and \'overflow-y\' (or \'overflow-x\') set to \'auto\' so it can scroll correctly and only render the items visible in the scroll viewport.');
       });
       throw new Error('Rendered items limit reached');
     }
-  }, {
-    key: "sortViews",
-    value: function sortViews() {
-      this.pool.sort(function (viewA, viewB) {
-        return viewA.nr.index - viewB.nr.index;
-      });
-    }
+    /**
+     * Configures the necessary listeners for functionality
+     */
+
   }, {
     key: "applyPageMode",
     value: function applyPageMode() {
@@ -5014,6 +5251,12 @@ Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["b" /* Pr
 Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["b" /* Prop */])({
   default: true
 })], RecycleScrollervue_type_script_lang_ts_RecycleScroller.prototype, "detectHover", void 0);
+
+Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["b" /* Prop */])({
+  default: function _default() {
+    return [];
+  }
+})], RecycleScrollervue_type_script_lang_ts_RecycleScroller.prototype, "invisibleRenderIndices", void 0);
 
 Object(tslib_es6["a" /* __decorate */])([Object(vue_property_decorator["d" /* Watch */])('items')], RecycleScrollervue_type_script_lang_ts_RecycleScroller.prototype, "itemsChanged", null);
 
@@ -6910,18 +7153,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "bb2f":
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__("d039");
-
-module.exports = !fails(function () {
-  return Object.isExtensible(Object.preventExtensions({}));
-});
-
-
-/***/ }),
-
 /***/ "bee2":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -7785,6 +8016,32 @@ var config = {
 
 /***/ }),
 
+/***/ "d81d":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $map = __webpack_require__("b727").map;
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
+// FF49- issue
+var USES_TO_LENGTH = arrayMethodUsesToLength('map');
+
+// `Array.prototype.map` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.map
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  map: function map(callbackfn /* , thisArg */) {
+    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "da84":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8582,74 +8839,6 @@ var PromiseCapability = function (C) {
 module.exports.f = function (C) {
   return new PromiseCapability(C);
 };
-
-
-/***/ }),
-
-/***/ "f183":
-/***/ (function(module, exports, __webpack_require__) {
-
-var hiddenKeys = __webpack_require__("d012");
-var isObject = __webpack_require__("861d");
-var has = __webpack_require__("5135");
-var defineProperty = __webpack_require__("9bf2").f;
-var uid = __webpack_require__("90e3");
-var FREEZING = __webpack_require__("bb2f");
-
-var METADATA = uid('meta');
-var id = 0;
-
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-
-var setMetadata = function (it) {
-  defineProperty(it, METADATA, { value: {
-    objectID: 'O' + ++id, // object ID
-    weakData: {}          // weak collections IDs
-  } });
-};
-
-var fastKey = function (it, create) {
-  // return a primitive with prefix
-  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if (!has(it, METADATA)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F';
-    // not necessary to add metadata
-    if (!create) return 'E';
-    // add missing metadata
-    setMetadata(it);
-  // return object ID
-  } return it[METADATA].objectID;
-};
-
-var getWeakData = function (it, create) {
-  if (!has(it, METADATA)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true;
-    // not necessary to add metadata
-    if (!create) return false;
-    // add missing metadata
-    setMetadata(it);
-  // return the store of weak collections IDs
-  } return it[METADATA].weakData;
-};
-
-// add metadata on freeze-family methods calling
-var onFreeze = function (it) {
-  if (FREEZING && meta.REQUIRED && isExtensible(it) && !has(it, METADATA)) setMetadata(it);
-  return it;
-};
-
-var meta = module.exports = {
-  REQUIRED: false,
-  fastKey: fastKey,
-  getWeakData: getWeakData,
-  onFreeze: onFreeze
-};
-
-hiddenKeys[METADATA] = true;
 
 
 /***/ }),

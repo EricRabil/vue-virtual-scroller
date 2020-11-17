@@ -24,6 +24,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'no-cond-assign': 'off',
     'semi': ['error', 'never'],
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'no-trailing-spaces': 'off'
   }
 }

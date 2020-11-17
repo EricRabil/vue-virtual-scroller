@@ -4,12 +4,16 @@
     class="vue-recycle-scroller"
     :class="{
       ready,
+      'busy': busy,
       'page-mode': pageMode,
       [`direction-${direction}`]: true,
     }"
     @scroll.passive="handleScroll"
   >
-    <div v-if="$slots.before" class="vue-recycle-scroller__slot">
+    <div v-if="$slots.before || invisibleRenderIndices.length > 0" class="vue-recycle-scroller__slot">
+      <div v-for="index in invisibleRenderIndices" :key="`invisible-${index}`" style="position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none;">
+        <slot :item="items[index]" :index="index" :active="true" />
+      </div>
       <slot name="before" />
     </div>
 
@@ -42,6 +46,10 @@
               }
             : {}
         "
+        :attr-real="view.position > -9999"
+        :attr-position="view.position"
+        :attr-key="view.nr.key"
+        ref="poolItems"
       >
         <slot :item="view.item" :index="view.nr.index" :active="view.nr.used" />
       </div>
@@ -62,10 +70,22 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import ScrollParent from 'scrollparent'
 import config from '../config'
 import { Common } from './common'
-import { supportsPassive } from '../utils'
-import { PoolItem } from '../types'
+import { getRandomString, supportsPassive } from '../utils'
+import { PoolItem, NoKey, TypeKey } from '../types'
 
 let uid = 0
+
+type UnusedRecord<T> = Record<TypeKey, PoolItem<T>[] | undefined>
+
+interface RenderRange {
+  startIndex: number;
+  endIndex: number;
+  totalSize: number | null;
+}
+
+const NewUnusedRecord: <T>() => UnusedRecord<T> = () => ({
+  [NoKey]: []
+})
 
 @Component({
   name: 'RecycleScroller',
@@ -104,12 +124,21 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
   @Prop({ default: true })
   detectHover: boolean;
 
+  @Prop({ default: () => [] })
+  invisibleRenderIndices: number[];
+
+  $refs: {
+    poolItems: HTMLDivElement[];
+  };
+
   pool: PoolItem<T>[] = [];
   totalSize = 0;
   ready = false;
   hoverKey: string | null = null;
   scrollTimeout = 0;
   listenerTarget: EventTarget | null = null;
+
+  scrolling = false;
 
   get sizes () {
     if (this.itemSize === null) {
@@ -144,8 +173,8 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
 
   $_startIndex: number;
   $_endIndex: number;
-  $_views: Map<string, PoolItem<T>>;
-  $_unusedViews: Map<string, PoolItem<T>[]>;
+  $_views: Record<string, PoolItem<T> | undefined>;
+  $_unusedViews: UnusedRecord<T>;
   $_scrollDirty: boolean;
   $_lastUpdateScrollPosition: number;
   $_prerender: boolean;
@@ -153,16 +182,21 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
   $_refreshTimeout: number;
   $_continuous: boolean;
   $_sortTimer: number;
+  $_scrollPositions: Record<string, {
+    key: unknown;
+    boundingY: number;
+  } | undefined>;
 
   /** Lifecycle Hooks */
 
   created () {
     this.$_startIndex = 0
     this.$_endIndex = 0
-    this.$_views = new Map()
-    this.$_unusedViews = new Map()
+    this.$_views = {}
+    this.$_unusedViews = NewUnusedRecord()
     this.$_scrollDirty = false
     this.$_lastUpdateScrollPosition = 0
+    this.$_scrollPositions = {}
 
     if (this.prerender) {
       this.$_prerender = true
@@ -205,19 +239,110 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
 
   /** Methods */
 
+  resolveKey (item: T, keyField: keyof T | null = this.keyField): string | null {
+    return ((keyField ? item[keyField] : item) as unknown as string | undefined) || null
+  }
+
+  /**
+   * Resolves the key index that should be used for the given item
+   * @param item the item to resolve
+   * @param typeField the cached type field, if omitted it is retrieved from this
+   */
+  resolveType (item: T, typeField: keyof T | null = this.typeField): TypeKey {
+    return typeField ? ((item[typeField] as unknown as string | undefined) || NoKey) : NoKey
+  }
+
+  /**
+   * Returns an existing view for an index, or creates a new view corresponding to the given index
+   * @param index the index of the item to create
+   */
+  makeView (index: number, reuse = true, push = true): PoolItem<T> {
+    const item = this.items[index]
+    const key = this.resolveKey(item, this.keyField)
+
+    if (key === null) {
+      throw new Error(`Key is ${key} on item (keyField is '${this.keyField}')`)
+    }
+
+    let view = this.$_views[key]
+
+    if (view) {
+      view.nr.used = true
+      view.item = item
+      return view
+    }
+
+    const type = this.resolveType(item, this.typeField)
+    let unusedPool = this.$_unusedViews[type || NoKey]
+
+    /**
+     * Takes an existing view and personalizes it to the current item
+     * @param view view to mutate
+     */
+    const personalize = (view: PoolItem<T>) => {
+      view.item = item
+      view.nr.used = true
+      view.nr.index = index
+      view.nr.key = key
+      view.nr.type = type
+
+      return view
+    }
+
+    if (reuse) {
+      if (this.$_continuous) {
+        // Reuse an existing view
+        if (unusedPool && unusedPool.length) {
+          if (view = unusedPool.pop()) {
+            personalize(view)
+          }
+        } else {
+          // Birth a new view
+          view = this.addView(this.pool, index, item, key, type, push)
+        }
+      } else {
+        if (!unusedPool || unusedPool.length === 0) {
+          view = this.addView(this.pool, index, item, key, type, push)
+          this.unuseView(view, true)
+          unusedPool = this.$_unusedViews[type || NoKey]
+        }
+
+        view = personalize(unusedPool!.shift()!)
+      }
+    } else {
+      view = this.addView(this.pool, index, item, key, type, push)
+    }
+
+    this.$_views[key] = view
+
+    return view!
+  }
+
+  /**
+   * Adds an item to the provided pool, constructing a PoolItem
+   * 
+   * @param pool pool to add the item to
+   * @param index index of the item being added
+   * @param item the inner item data passed to the implementation
+   * @param key the vue :key value
+   * @param type ???
+   */
   addView (
     pool: PoolItem<T>[],
     index: number,
     item: T,
     key: string,
-    type: string
+    type: TypeKey,
+    push = true
   ): PoolItem<T> {
-    const view = {
+    const view: Partial<PoolItem<T>> = {
       item,
-      position: 0,
-      nr: undefined!
+      position: 0
     }
 
+    /**
+     * Defines the non-reactive data for this item, Vue will not observe changes here
+     */
     Object.defineProperty(view, 'nr', {
       configurable: false,
       value: {
@@ -229,20 +354,25 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
       }
     })
 
-    pool.push(view)
+    if (push) pool.push(view as PoolItem<T>)
 
-    return view
+    return view as PoolItem<T>
   }
 
+  /**
+   * Inserts a view into the unused pool
+   * @param view the view to unuse
+   * @param fake whether this is a placeholder view
+   */
   unuseView (view: PoolItem<T>, fake = false) {
     const unusedViews = this.$_unusedViews
     const { type } = view.nr
 
-    let unusedPool = unusedViews.get(type)
+    let unusedPool = unusedViews[type]
 
     if (!unusedPool) {
       unusedPool = []
-      unusedViews.set(type, unusedPool)
+      unusedViews[type] = unusedPool
     }
 
     unusedPool.push(view)
@@ -250,7 +380,7 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     if (!fake) {
       view.nr.used = false
       view.position = -9999
-      this.$_views.delete(view.nr.key)
+      this.$_views[view.nr.key] = undefined
     }
   }
 
@@ -260,30 +390,27 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
   }
 
   handleScroll () {
-    const job = () => {
-      if (!this.$_scrollDirty) {
-        this.$_scrollDirty = true
-        requestAnimationFrame(() => {
-          this.$_scrollDirty = false
-          const { continuous } = this.updateVisibleItems(false)
+    this.scrolling = true
 
-          // It seems sometimes chrome doesn't fire scroll event :/
-          // When non continous scrolling is ending, we force a refresh
-          if (!continuous) {
-            clearTimeout(this.$_refreshTimeout)
-            this.$_refreshTimeout = setTimeout(this.handleScroll, 100)
-          }
-        })
-      }
+    if (!this.$_scrollDirty) {
+      this.$_scrollDirty = true
+      requestAnimationFrame(() => {
+        this.$_scrollDirty = false
+        const continuous = this.updateVisibleItems(false)
+
+        // It seems sometimes chrome doesn't fire scroll event :/
+        // When non continous scrolling is ending, we force a refresh
+        if (!continuous) {
+          clearTimeout(this.$_refreshTimeout)
+          this.$_refreshTimeout = setTimeout(this.handleScroll, 100)
+        }
+      })
     }
 
     clearTimeout(this.scrollTimeout)
-
-    if (this.debounce) {
-      this.scrollTimeout = setTimeout(job, +this.debounce)
-    } else {
-      job()
-    }
+    this.scrollTimeout = setTimeout(() => {
+      this.scrolling = false
+    }, 100)
   }
 
   handleVisibilityChange (
@@ -306,26 +433,42 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     }
   }
 
-  updateVisibleItems (checkItem: boolean, checkPositionDiff = false) {
-    const itemSize = this.itemSize
-    const minItemSize = this.$_computedMinItemSize
-    const typeField = this.typeField
-    const keyField = this.simpleArray ? null : this.keyField
+  $_lastStartIndex: number
+  $_lastEndIndex: number
+  $_lastTotalSize: number
+
+  busy = false
+
+  /**
+   * Determines the range of items to be rendered
+   * @param checkPositionDiff whether to take the position difference into account when computing
+   * @returns render range, or null if the position hasn't changed enough
+   */
+  computeRenderRange (checkPositionDiff = false): RenderRange | null {
+    if (this.busy && typeof this.$_lastStartIndex === 'number' && typeof this.$_lastEndIndex === 'number' && typeof this.$_lastTotalSize !== 'undefined') {
+      return {
+        startIndex: this.$_lastStartIndex,
+        endIndex: this.$_lastEndIndex,
+        totalSize: this.$_lastTotalSize
+      }
+    }
+
     const items = this.items
     const count = items.length
+    const itemSize = this.itemSize
+    const minItemSize = this.$_computedMinItemSize
     const sizes = this.sizes
-    const views = this.$_views
-    const unusedViews = this.$_unusedViews
-    const pool = this.pool
-    let startIndex, endIndex
-    let totalSize
+
+    let startIndex, endIndex, totalSize
 
     if (!count) {
+      // Reset all the things
       startIndex = endIndex = totalSize = 0
     } else if (this.$_prerender) {
+      // SSR, render from the start to the configured pre-render index
       startIndex = 0
       endIndex = this.prerender
-      totalSize = null
+      totalSize = 0
     } else {
       const scroll = this.getScroll()
 
@@ -337,11 +480,10 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
           (itemSize === null && positionDiff < minItemSize) ||
           positionDiff < (itemSize || 0)
         ) {
-          return {
-            continuous: true
-          }
+          return null
         }
       }
+
       this.$_lastUpdateScrollPosition = scroll.start
 
       const buffer = this.buffer
@@ -399,141 +541,20 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
       }
     }
 
-    if (endIndex - startIndex > config.itemsLimit) {
-      this.itemsLimitError()
-    }
-
-    this.totalSize = totalSize || 0
-
-    let view: PoolItem<T> | undefined
-
-    const continuous =
-      startIndex <= this.$_endIndex && endIndex >= this.$_startIndex
-
-    if (this.$_continuous !== continuous) {
-      if (continuous) {
-        views.clear()
-        unusedViews.clear()
-        for (let i = 0, l = pool.length; i < l; i++) {
-          view = pool[i]
-          this.unuseView(view)
-        }
-      }
-      this.$_continuous = continuous
-    } else if (continuous) {
-      for (let i = 0, l = pool.length; i < l; i++) {
-        view = pool[i]
-        if (view.nr.used) {
-          // Update view item index
-          if (checkItem) {
-            view.nr.index = items.findIndex((item) =>
-              keyField
-                ? item[keyField] === view!.item[keyField]
-                : item === view!.item
-            )
-          }
-
-          // Check if index is still in visible range
-          if (
-            view.nr.index === -1 ||
-            view.nr.index < startIndex ||
-            view.nr.index >= endIndex
-          ) {
-            this.unuseView(view)
-          }
-        }
-      }
-    }
-
-    const unusedIndex = continuous ? null : new Map()
-
-    let item, type: string, unusedPool
-    let v
-    for (let i = startIndex; i < endIndex; i++) {
-      item = items[i]
-      const key: string = (keyField ? item[keyField] : item) as unknown as string
-      if (key === null) {
-        throw new Error(`Key is ${key} on item (keyField is '${keyField}')`)
-      }
-      view = views.get(key as unknown as string)
-
-      if (!itemSize && !sizes[i].size) {
-        if (view) this.unuseView(view)
-        continue
-      }
-
-      // No view assigned to item
-      if (!view) {
-        if (i === items.length - 1) this.$emit('scrolledtoend')
-        if (i === 0) this.$emit('scrolledtobegin')
-
-        type = item[typeField] as unknown as string
-        unusedPool = unusedViews.get(type)
-
-        if (continuous) {
-          // Reuse existing view
-          if (unusedPool && unusedPool.length) {
-            if (view = unusedPool.pop()) {
-              view.item = item
-              view.nr.used = true
-              view.nr.index = i
-              view.nr.key = key as any
-              view.nr.type = type as any
-            }
-          } else {
-            view = this.addView(pool, i, item, key, type)
-          }
-        } else if (unusedIndex) {
-          // Use existing view
-          // We don't care if they are already used
-          // because we are not in continous scrolling
-          v = unusedIndex.get(type) || 0
-
-          if (!unusedPool || v >= unusedPool.length) {
-            view = this.addView(pool, i, item, key, type)
-            this.unuseView(view, true)
-            unusedPool = unusedViews.get(type)
-          }
-
-          view = unusedPool![v]
-          view.item = item
-          view.nr.used = true
-          view.nr.index = i
-          view.nr.key = key
-          view.nr.type = type
-          unusedIndex.set(type, v + 1)
-          v++
-        }
-
-        views.set(key, view!)
-      } else {
-        view.nr.used = true
-        view.item = item
-      }
-
-      // Update position
-      if (itemSize === null) {
-        view!.position = sizes[i - 1].accumulator
-      } else {
-        view!.position = i * itemSize
-      }
-    }
-
-    this.$_startIndex = startIndex
-    this.$_endIndex = endIndex
-
-    if (this.emitUpdate) this.$emit('update', startIndex, endIndex)
-
-    // After the user has finished scrolling
-    // Sort views so text selection is correct
-    clearTimeout(this.$_sortTimer)
-    this.$_sortTimer = setTimeout(this.sortViews, 300)
+    this.$_lastStartIndex = startIndex
+    this.$_lastEndIndex = endIndex
+    this.$_lastTotalSize = this.totalSize = totalSize
 
     return {
-      continuous
+      startIndex,
+      endIndex,
+      totalSize
     }
   }
 
+  /**
+   * Gets the current scroll positions
+   */
   getScroll (): {
     start: number;
     end: number;
@@ -576,6 +597,144 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     return scrollState
   }
 
+  /**
+   * Rebuilds the render pool using a given range
+   * @param renderRange the range of items to render, returned by computeRenderRange
+   * @param checkItem whether to ensure all pool items have the same index
+   */
+  applyRenderRange ({ startIndex, endIndex }: RenderRange, checkItem: boolean): boolean {
+    const continuous = startIndex <= this.$_endIndex && endIndex >= this.$_startIndex
+    let item: T, view: PoolItem<T> | undefined
+
+    if (this.$_continuous !== continuous) {
+      // Teardown all views
+      if (continuous) {
+        this.$_views = {}
+        this.$_unusedViews = {
+          [NoKey]: []
+        }
+        for (let i = 0, l = this.pool.length; i < l; i++) {
+          view = this.pool[i]
+          this.unuseView(view)
+        }
+      }
+      this.$_continuous = continuous
+    } else if (continuous) {
+      for (let i = 0, l = this.pool.length; i < l; i++) {
+        view = this.pool[i]
+        if (view.nr.used) {
+          // Update view item index
+          if (checkItem) {
+            view.nr.index = this.items.findIndex((item) =>
+              this.keyField
+                ? item[this.keyField] === view!.item[this.keyField]
+                : item === view!.item
+            )
+          }
+
+          // Check if index is still in visible range
+          if (
+            view.nr.index === -1 ||
+            view.nr.index < startIndex ||
+            view.nr.index >= endIndex
+          ) {
+            this.unuseView(view)
+          }
+        }
+      }
+    }
+
+    for (let i = startIndex; i < endIndex; i++) {
+      if (i === this.items.length - 1) this.$emit('scrolledtoend')
+      if (i === 0) this.$emit('scrolledtobegin')
+      
+      item = this.items[i]
+      const key = this.resolveKey(item, this.keyField)
+
+      if (key === null) {
+        throw new Error(`Key is ${key} on item (keyField is '${this.keyField}')`)
+      }
+
+      view = this.$_views[key]
+
+      if (!this.itemSize && !this.sizes[i].size) {
+        // Discard because there's no size
+        if (view) this.unuseView(view)
+        continue
+      }
+
+      view = this.makeView(i)
+
+      // Update position
+      if (this.itemSize === null) {
+        view!.position = this.sizes[i - 1].accumulator
+      } else {
+        view!.position = i * this.itemSize
+      }
+    }
+
+    this.$_startIndex = startIndex
+    this.$_endIndex = endIndex
+
+    return continuous
+  }
+
+  /**
+   * Updates the pool of visible items
+   * @param checkItem whether to ensure item indices are still accurate
+   * @param checkPositionDiff whether to abort update if the position hasn't changed enough
+   */
+  updateVisibleItems (checkItem: boolean, checkPositionDiff = false): boolean {
+    const count = this.items.length
+    
+    const bounds = this.computeRenderRange(checkPositionDiff)
+
+    if (!bounds) {
+      return true
+    }
+
+    let { startIndex, endIndex, totalSize } = bounds
+
+    if (startIndex < 0) startIndex = 0
+    if (endIndex >= count) endIndex = count - 1
+
+    if (endIndex - startIndex > config.itemsLimit) {
+      this.itemsLimitError()
+    }
+
+    const continuous = this.applyRenderRange({
+      startIndex,
+      endIndex,
+      totalSize
+    }, checkItem)
+
+    if (this.emitUpdate) this.$emit('update', startIndex, endIndex)
+
+    this.requestSortViews()
+
+    return continuous
+  }
+
+  /**
+   * Sorts the render pool by index
+   */
+  sortViews () {
+    this.pool.sort((viewA, viewB) => viewA.nr.index - viewB.nr.index)
+  }
+
+  /**
+   * Debounced organization of render pool arary
+   */
+  requestSortViews () {
+    // After the user has finished scrolling
+    // Sort views so text selection is correct
+    clearTimeout(this.$_sortTimer)
+    this.$_sortTimer = setTimeout(this.sortViews, 300)
+  }
+
+  /**
+   * Returns the element to listen to scroll/resize events on
+   */
   getListenerTarget (): EventTarget | null {
     let target: EventTarget | null = ScrollParent(this.$el as HTMLElement)
     // Fix global scroll target for Chrome and Safari
@@ -586,6 +745,9 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     return target
   }
 
+  /**
+   * Binds scroll/resize listeners to the configured listenerTarget
+   */
   addListeners () {
     this.listenerTarget = this.getListenerTarget()
 
@@ -596,6 +758,9 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     this.listenerTarget?.addEventListener('resize', this.handleResize)
   }
 
+  /**
+   * Removes scroll/resize listeners from the configured listenerTarget
+   */
   removeListeners () {
     if (!this.listenerTarget) return
 
@@ -604,17 +769,106 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
 
     this.listenerTarget = null
   }
+  
+  /**
+   * Computes the current position of an item with the given index
+   * @param index index of the item to compute
+   * @returns scroll offset
+   */
+  scrollPositionForItem (index: number): number {
+    let scroll: number
 
-  scrollToItem (index: number) {
-    let scroll
     if (this.itemSize === null) {
       scroll = index > 0 ? this.sizes[index - 1].accumulator : 0
     } else {
       scroll = index * this.itemSize
     }
-    this.scrollToPosition(scroll)
+
+    return scroll
+  }
+  
+  /**
+   * Computes the current position of an item with the given key
+   * @param key key of the item to compute
+   * @returns scroll offset
+   */
+  scrollPositionForItemWithKey (key: unknown): number {
+    return this.scrollPositionForItem(this.items.findIndex(({ [this.keyField]: itemKey }) => itemKey === key))
   }
 
+  /**
+   * Saves the current scroll position, to be restored later
+   * @returns unique string to fetch the scroll position later
+   */
+  saveScrollPosition (): string | null {
+    const scrollID = getRandomString()
+
+    const item = this.firstRealPoolItem()
+
+    if (!item) return null
+    
+    let key: unknown = item.getAttribute('attr-key')
+    key = +(key as string) || key
+
+    if (key === null) return null
+
+    this.$_scrollPositions[scrollID] = {
+      boundingY: item.getBoundingClientRect().y - this.$el.getBoundingClientRect().y,
+      key
+    }
+
+    return scrollID
+  }
+
+  /**
+   * Returns the last rendered pool item
+   */
+  lastRealPoolItem (): HTMLDivElement | null {
+    return this.realPoolItems().reverse()[0] || null
+  }
+
+  /**
+   * Returns the first rendered pool item
+   */
+  firstRealPoolItem (): HTMLDivElement | null {
+    return this.realPoolItems()[0] || null
+  }
+
+  /**
+   * Returns real pool items sorted by their position
+   */
+  realPoolItems (): HTMLDivElement[] {
+    const items = this.$refs.poolItems?.filter(item => item.getAttribute('attr-real') === 'true') || []
+
+    return items.sort((item1, item2) => +item1.getAttribute('attr-position')! - +item2.getAttribute('attr-position')!)
+  }
+
+  /**
+   * Restores a previously saved scroll position
+   */
+  restoreScrollPosition (id: string, clear = true) {
+    const saved = this.$_scrollPositions[id]
+
+    if (!saved) return
+    else if (clear) this.$_scrollPositions[id] = undefined
+
+    const newPosition = this.scrollPositionForItemWithKey(saved.key)
+
+    this.scrollToPosition(newPosition - saved.boundingY)
+  }
+
+  /**
+   * Scrolls the item with the given index into view
+   * @param index index of the item to reveal
+   */
+  scrollToItem (index: number) {
+    this.scrollToPosition(this.scrollPositionForItem(index))
+  }
+
+  /**
+   * Scrolls the view to the given absolute position, in px
+   * @param position the position to scroll to
+   */
   scrollToPosition (position: number) {
     if (this.direction === 'vertical') {
       this.$el.scrollTop = position
@@ -623,6 +877,9 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     }
   }
 
+  /**
+   * Raises an error regarding broken scrolling
+   */
   itemsLimitError () {
     setTimeout(() => {
       console.log(
@@ -637,10 +894,9 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
     throw new Error('Rendered items limit reached')
   }
 
-  sortViews () {
-    this.pool.sort((viewA, viewB) => viewA.nr.index - viewB.nr.index)
-  }
-
+  /**
+   * Configures the necessary listeners for functionality
+   */
   applyPageMode () {
     if (this.pageMode) {
       this.addListeners()
@@ -654,6 +910,10 @@ export default class RecycleScroller<T = unknown> extends Common<T> {
 <style>
 .vue-recycle-scroller {
   position: relative;
+}
+
+.vue-recycle-scroller.busy::-webkit-scrollbar {
+  display: none;
 }
 
 .vue-recycle-scroller.direction-vertical:not(.page-mode) {
